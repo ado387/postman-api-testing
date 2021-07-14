@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.*;
 public class PostmanAPITests {
 
     static String collectionsBaseURI = "https://api.getpostman.com/collections";
-    static String apiKey = "PMAK-60ecb6041c424a005ca4a1ef-5b8ff2f955e654b7ad5914fe6db815e72d";
+    static String apiKey = "";
 
     @Test
     public void postmanGetAllCollections() {
