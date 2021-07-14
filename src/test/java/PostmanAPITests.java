@@ -169,7 +169,7 @@ public class PostmanAPITests {
             .post()
         .then()
             .statusCode( 400 )
-            .body( "error.details[0]", hasToString( "info: must have required property 'name'" ) )
+            .body( "error.details[0]", equalTo( "info: must have required property 'name'" ) )
             .log().all();
     }
 
@@ -207,7 +207,7 @@ public class PostmanAPITests {
             .post()
         .then()
             .statusCode( 400 )
-            .body( "error.details[0]", hasToString( ": must have required property 'item'" ) )
+            .body( "error.details[0]", equalTo( ": must have required property 'item'" ) )
             .log().all();
     }
 
