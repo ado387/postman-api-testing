@@ -28,4 +28,19 @@ public class PostmanAPITests {
             .body( "collections.id", hasItems( collections ) )
             .log().all();
     }
+
+    @Test
+    public void postmanGetSingleCollection() {
+
+        baseURI = collectionsBaseURI;
+        String collectionUid = "16604891-86ad9b7b-1b71-4930-a600-0ab43ac3927f";
+
+        given()
+            .header( "X-Api-Key", apiKey )
+            .get( "/" + collectionUid )
+        .then()
+            .statusCode( 200 )
+            .body( "collection.info.name", equalTo( "Postman API" ) )
+            .log().all();
+    }
 }
