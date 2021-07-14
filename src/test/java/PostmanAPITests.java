@@ -18,9 +18,9 @@ public class PostmanAPITests {
         baseURI = collectionsBaseURI;
 
         String[] collections = {
-                "1021f472-9cbd-40df-91e3-b61b53777295",
-                "86ad9b7b-1b71-4930-a600-0ab43ac3927f",
-                "e8b4cb39-75c2-458a-822f-abcaae897570"
+                "84c08e9e-dc49-4855-93fe-f97d4cc3a0f5",
+                "f31f74c7-e793-4a88-b113-74a017e13128",
+                "8a6c602c-bdaa-4ad7-9f76-b39556f4b925"
         };
 
         given()
@@ -61,17 +61,17 @@ public class PostmanAPITests {
                     {
                         "collection": {
                              "info": {
-                                "name": "Reqres Testing API",
-                                "description": "Reqres is a test resource for REST APIs.",
+                                "name": "Example Collection",
+                                "description": "Example collection for testing postman API.",
                                 "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
                              },
                              "item": [
                                 {
-                                    "name": "List Users",
+                                    "name": "All resources",
                                     "request": {
-                                        "url": "https://reqres.in/api/users?page=1",
+                                        "url": "https://example.com/api/resources",
                                         "method": "GET",
-                                        "description": "Lists 6 users per page",
+                                        "description": "Lists all resources",
                                         "header": [],
                                         "body": {
                                             "mode": "raw",
@@ -81,11 +81,11 @@ public class PostmanAPITests {
                                     "response": []
                                 },
                                 {
-                                    "name": "Single User",
+                                    "name": "Single resource",
                                     "request": {
-                                        "url": "https://reqres.in/api/users/1",
+                                        "url": "https://example.com/api/resources/1",
                                         "method": "GET",
-                                        "description": "Gets single user given ID",
+                                        "description": "Gets single resource given ID",
                                         "header": [],
                                         "body": {
                                             "mode": "raw",
@@ -95,11 +95,11 @@ public class PostmanAPITests {
                                     "response": []
                                 },
                                 {
-                                    "name": "Create User",
+                                    "name": "Create resource",
                                     "request": {
-                                        "url": "https://reqres.in/api/users",
+                                        "url": "https://example.com/api/resources",
                                         "method": "POST",
-                                        "description": "Creates a new user",
+                                        "description": "Creates a new resource",
                                         "header": [
                                             {
                                                  "key": "Content-Type",
@@ -109,7 +109,7 @@ public class PostmanAPITests {
                                         ],
                                         "body": {
                                             "mode": "raw",
-                                            "raw": "{\\"name\\": \\"ado387\\", \\"job\\": \\"developer\\"}"
+                                            "raw": "{resource: [] }"
                                         }
                                     },
                                     "response": []
