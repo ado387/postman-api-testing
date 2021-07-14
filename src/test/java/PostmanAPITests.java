@@ -1,4 +1,7 @@
+import org.json.simple.parser.ParseException;
 import org.testng.annotations.Test;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.*;
@@ -42,5 +45,94 @@ public class PostmanAPITests {
             .statusCode( 200 )
             .body( "collection.info.name", equalTo( "Postman API" ) )
             .log().all();
+    }
+
+    @Test
+    public void postmanCreateCollection() {
+
+        baseURI = collectionsBaseURI;
+        String workspaceId = "d13fbb01-ecea-49ce-86dd-19ecbf5ec1d5"; // Postman API Tests workspace.
+
+        JSONParser parser = new JSONParser();
+        JSONObject request = new JSONObject();
+
+        try {
+            request = (JSONObject) parser.parse("""
+                    {
+                        "collection": {
+                             "info": {
+                                "name": "Reqres Testing API",
+                                "description": "Reqres is a test resource for REST APIs.",
+                                "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+                             },
+                             "item": [
+                                {
+                                    "name": "List Users",
+                                    "request": {
+                                        "url": "https://reqres.in/api/users?page=1",
+                                        "method": "GET",
+                                        "description": "Lists 6 users per page",
+                                        "header": [],
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": ""
+                                        }
+                                    },
+                                    "response": []
+                                },
+                                {
+                                    "name": "Single User",
+                                    "request": {
+                                        "url": "https://reqres.in/api/users/1",
+                                        "method": "GET",
+                                        "description": "Gets single user given ID",
+                                        "header": [],
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": ""
+                                        }
+                                    },
+                                    "response": []
+                                },
+                                {
+                                    "name": "Create User",
+                                    "request": {
+                                        "url": "https://reqres.in/api/users",
+                                        "method": "POST",
+                                        "description": "Creates a new user",
+                                        "header": [
+                                            {
+                                                 "key": "Content-Type",
+                                                 "value": "application/json",
+                                                 "description": ""
+                                            }
+                                        ],
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\\"name\\": \\"ado387\\", \\"job\\": \\"developer\\"}"
+                                        }
+                                    },
+                                    "response": []
+                                }
+                             ]
+                        }
+                    }
+                    """
+            );
+        } catch ( ParseException e ) {
+            System.out.println( e );
+        }
+
+        given()
+            .header( "X-Api-Key", apiKey )
+            .queryParam( "workspace", workspaceId )
+            .body( request.toJSONString() )
+        .when()
+            .post()
+        .then()
+            .statusCode( 200 )
+            .body( "collection", hasKey( "id") )
+            .log().all();
+
     }
 }
