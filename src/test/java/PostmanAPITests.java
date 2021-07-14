@@ -133,6 +133,43 @@ public class PostmanAPITests {
             .statusCode( 200 )
             .body( "collection", hasKey( "id") )
             .log().all();
+    }
 
+    @Test
+    public void postmanMissingNameParamTest() {
+
+        baseURI = collectionsBaseURI;
+        String workspaceId = "d13fbb01-ecea-49ce-86dd-19ecbf5ec1d5"; // Postman API Tests workspace.
+
+        JSONParser parser = new JSONParser();
+        JSONObject request = new JSONObject();
+
+        try {
+            request = (JSONObject) parser.parse("""
+                    {
+                        "collection": {
+                             "info": {
+                                "description": "Reqres is a test resource for REST APIs.",
+                                "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+                             }
+                             "item": []
+                        }
+                    }
+                    """
+            );
+        } catch ( ParseException e ) {
+            System.out.println( e );
+        }
+
+        given()
+            .header( "X-Api-Key", apiKey )
+            .queryParam( "workspace", workspaceId )
+            .body( request.toJSONString() )
+        .when()
+            .post()
+        .then()
+            .statusCode( 400 )
+            .body( "error.details[0]", hasToString( "info: must have required property 'name'" ) )
+            .log().all();
     }
 }
